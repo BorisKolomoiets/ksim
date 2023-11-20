@@ -37,7 +37,7 @@ end
     if current-day-tick mod 2 = 0 [
       change-sun-intensity-and-temperature
     ]
-    set current-day-tick current-day-tick + 1
+    set current-day-tick current-day-tick + 2
   ] [
     set current-day-tick 0
   ]
