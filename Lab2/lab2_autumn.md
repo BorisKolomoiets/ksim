@@ -26,9 +26,21 @@ globals [
 Задали значення для **day-long-ticks** та **current-day-tick** в процедурі **setup**
 <pre>
 to setup
-  set day-long-ticks 30
+  set day-long-ticks 48
   set current-day-tick 0 
 end
+</pre>
+
+Додали значення керуючі **day-long-ticks** та **current-day-tick** в процедурі **go**
+<pre>
+  ifelse current-day-tick < day-long-ticks [
+    if current-day-tick mod 2 = 0 [
+      change-sun-intensity-and-temperature
+    ]
+    set current-day-tick current-day-tick + 1
+  ] [
+    set current-day-tick 0
+  ]
 </pre>
 
 Додали процедуру **change-sun-intensity-and-temperature** яка буде змінювати інтенсивність сонця та температуру в залежності від часу.
