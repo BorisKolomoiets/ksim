@@ -36,8 +36,8 @@ to setup
   set-default-shape raindrops "circle"
   set-default-shape suns "circle"
 
-  set day-long-ticks 24     ;; ??Задати тривалість доби у тиках (на ваш розсуд)
-  set current-day-tick 0     ;; ??Ініціалізувати поточний тик у межах однієї доби
+  set day-long-ticks 24
+  set current-day-tick 0
   set snow-intensity 5
 
   ;; Create sky and grass
