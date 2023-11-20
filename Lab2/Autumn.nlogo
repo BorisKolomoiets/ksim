@@ -18,11 +18,11 @@ raindrops-own [
 ]
 
 globals [
-  bottom-line        ;; controls where the ground is
-  evaporation-temp   ;; temperature at which water evaporates
-  snow-intensity 
-  day-long-ticks             ;; ??Тривалість модельної "доби" в тиках
-  current-day-tick           ;; ??Поточний тик у межах однієї доби
+  bottom-line
+  evaporation-temp
+  snow-intensity
+  day-long-ticks
+  current-day-tick
 ]
 
 ;; ---------------------------------------
@@ -35,10 +35,10 @@ to setup
   set evaporation-temp 30
   set-default-shape raindrops "circle"
   set-default-shape suns "circle"
-  
+
   set day-long-ticks 24     ;; ??Задати тривалість доби у тиках (на ваш розсуд)
   set current-day-tick 0     ;; ??Ініціалізувати поточний тик у межах однієї доби
-  set snow-intensity 5 
+  set snow-intensity 5
 
   ;; Create sky and grass
   ask patches [
@@ -112,7 +112,7 @@ to go
 
   ;; if the leaves are falling keep falling
   ask leaves [ fall-if-necessary ]
-   
+
 
   ;; Leaves on the bottom should be killed off
   ask leaves with [ ycor <= bottom-line ] [
@@ -137,16 +137,12 @@ to go
 
   ;; ??
 ifelse current-day-tick < day-long-ticks [
-  ;; Якщо не кінець доби, виконуємо зміни впливу сонячного світла
-  ;; В цьому прикладі, змінюємо інтенсивність сонячного світла щогодини
   if current-day-tick mod 2 = 0 [
     change-sun-intensity-and-temperature
   ]
-  ;; Збільшуємо поточний тик для добового циклу
   set current-day-tick current-day-tick + 1
 ] [
-  ;; Якщо умова current-day-tick < day-long-ticks виявилася хибною
-  ;; Тут можна виконати дії, які відбуваються, коли цикл "доби" завершено
+
   set current-day-tick 0
 ]
 
@@ -154,26 +150,23 @@ ifelse current-day-tick < day-long-ticks [
   tick
 end
 
-;; ??
 to change-sun-intensity-and-temperature
-  let time-of-day current-day-tick / day-long-ticks * 24  ;; Переведення у години
+  let time-of-day current-day-tick / day-long-ticks * 24
 
   if time-of-day >= 0 and time-of-day < 8 [
-    ;; Ніч: сонце не світить
+
     set sun-intensity 0
-    set temperature (adjust-temparature-limits temperature - 10)  ;; Якщо немає сонячного світла, температура ще більше падає
+    set temperature (adjust-temparature-limits temperature - 10)
   ]
 
   if time-of-day >= 8 and time-of-day < 16 [
-    ;; Денний час: світло, сонце яскравіше
     set sun-intensity 100
-    set temperature (adjust-temparature-limits temperature + 10)  ;; Збільшуємо температуру, коли сонце яскраве
+    set temperature (adjust-temparature-limits temperature + 10)
   ]
 
   if time-of-day >= 16 and time-of-day < 24 [
-    ;; Вечір або ніч: сонце світить менше або немає сонячного світла
     set sun-intensity 50
-    set temperature (adjust-temparature-limits temperature - 5)  ;; Зменшуємо температуру, коли сонце не світить як яскраво
+    set temperature (adjust-temparature-limits temperature - 5)
   ]
 end
 
@@ -227,18 +220,17 @@ to make-rain-fall-or-snow
       set amount-of-water 10
     ]
   ] [
-    ;; якщо температура від'ємна, то випадатиме сніг
     create-raindrops snow-intensity [
       setxy random-xcor max-pycor
       set heading 180
       fd 0.5 - random-float 1.0
       set size .8
-      set color white  
+      set color white
       set location "falling"
       set amount-of-water 10
     ]
   ]
-  
+
   ask raindrops [ fd random-float 2 ]
 end
 
